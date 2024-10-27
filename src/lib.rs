@@ -34,20 +34,15 @@ pub fn read_file(filepath: PathBuf) -> String {
 
 //TODO---Search Function---//
 
+pub fn search(search_string: &str,content: String) -> String{
+    todo!();
+}
+
 //TODO---Testing---//
 
 //Open file test and print out text
-
-fn print_test_file() -> String{
-    let mut file = File::open("Test.txt").expect("Something went wrong with opening the test file");
-
-    let mut content: String = String::new();
-
-    file.read_to_string(&mut content).expect("Something went wrong with reading the test file");
-
-    print!("{}",content);
-
-    content
+fn print_test_file(){
+    println!("{}",read_file(PathBuf::from("tests/Test.txt")))
 }
 
 #[cfg(test)]
@@ -62,5 +57,13 @@ mod test {
         file.read_to_string(&mut contents).expect("Failed to read test file content");
 
         assert_eq!(contents, read_file(PathBuf::from("tests/t1.txt")));
+    }
+
+    #[test]
+    fn test_search(){
+        let content = read_file(PathBuf::from("tests/t1.txt"));
+        let ans = search("even",content);
+
+        assert_eq!(ans, "even the hardness".to_string());
     }
 }
