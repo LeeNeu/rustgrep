@@ -33,7 +33,6 @@ pub fn read_file(filepath: PathBuf) -> String {
 
 
 //TODO---Search Function---//
-
 pub fn search(search_string: &str,content: String) -> String{
     todo!();
 }
