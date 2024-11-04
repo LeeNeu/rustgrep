@@ -1,6 +1,7 @@
 use std::{env, io::Read, path::PathBuf};
 use clap::{arg, command, ArgMatches, Command};
 use std::fs::File;
+use regex::Regex;
 
 //Read in all arguments
 pub fn read_args() -> ArgMatches {
@@ -33,8 +34,10 @@ pub fn read_file(filepath: PathBuf) -> String {
 
 
 //TODO---Search Function---//
-pub fn search(search_string: &str,content: String) -> String{
-    todo!();
+pub fn search(search_string: &str, haystack: &str) -> String{
+    let regex = Regex::new(format!("{}{}",search_string,r".*[\n\r]").as_str()).unwrap();
+    let mat = regex.find(haystack).unwrap();
+    mat.as_str().to_string()
 }
 
 //TODO---Testing---//
@@ -60,9 +63,9 @@ mod test {
 
     #[test]
     fn test_search(){
-        let content = read_file(PathBuf::from("tests/t1.txt"));
-        let ans = search("even",content);
+        let content = read_file(PathBuf::from("tests/Test.txt"));
+        let ans = search("even",&content);
 
-        assert_eq!(ans, "even the hardness".to_string());
+        assert_eq!(ans, "even the hardness,\n".to_string());
     }
 }
