@@ -15,6 +15,23 @@ Furthermore it should serve for other Rust Beginners as an oppurtunity to learn 
 - Create a standalone cli tool from this project.
 - To let collaborators have fun while learning rust on this project
 
+## Contribute 👨🏼‍💻👩🏼‍💻
+
+To contribute to this project: 
+1. Pick/Create an issue
+2. Fork the repository
+3. Resolve the issue and push your code to the dev branch
+4. Create a Pull Request
+
+Some general Do's:  
+✅ Only contribute with references to existing issues (or suggest a new issue if you found something you want to work on).   
+✅ Don't forget to comment out your code and explain what it does.  
+✅ Write descriptive commit messages and reference the issue number.  
+✅ If you found an issue for you, comment that you want to work on it so it can be assigned to you.  
+✅ Be patient ... this is a side project for me too and altough I am trying to be quick with approvals and support, it can take some time still.  
+
+Thank you for your contribution and I hope you have fun with this project! :) 
+
 ## Install
 
 To run this project: 
