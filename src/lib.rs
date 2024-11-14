@@ -1,6 +1,6 @@
-use std::{env, io::Read};
+use std::{env, error::Error};
 use clap::{arg, command, ArgMatches, Command};
-use std::fs::File;
+use std::fs;
 use regex::Regex;
 
 //Read in all arguments
@@ -29,21 +29,15 @@ pub fn exec_args(args: ArgMatches)-> String{
     let filepath = args.get_one::<String>("filepath").unwrap();
 
     // Execute file search
-    let haystack= read_file(filepath.clone());
+    // TODO instead of unwrap the Error should be mapped when returned
+    let haystack= read_file(filepath.clone()).unwrap();
     return search(search_string, haystack.as_str());
 }
 
 //---ReadFile---//
-fn read_file(filepath: String) -> String {
-
-    //TODO Impliment error handling for opening file
-    let mut file = File::open(filepath).expect("Could not open file in read_file");
-
-    let mut content: String = String::new();
-
-    file.read_to_string(&mut content).expect("Something went wrong with reading the test file");
-
-    content
+fn read_file(filepath: String) -> Result<String, Box<dyn Error>> {
+    let content: String = fs::read_to_string(filepath)?;
+    Ok(content)
 }
 
 
@@ -56,11 +50,11 @@ fn search(search_string: &str, haystack: &str) -> String{
     mat.as_str().to_string()
 }
 
-//TODO---Testing---//
+//---Testing---//
 
 //Open file test and print out text
 fn print_test_file(){
-    println!("{}",read_file("tests/Test.txt".to_string()))
+    println!("{}",read_file("testfiles/Test.txt".to_string()).unwrap())
 }
 
 #[cfg(test)]
@@ -69,17 +63,20 @@ mod test {
     use std::fs;
     #[test]
     fn test_file_reader(){
-        fs::write("tests/t1.txt", "Lorem\nIpsum\n\ndolor sit amet").expect("Writing to test file failed");
-        let mut file = File::open("tests/t1.txt").expect("Failed to read test file");
-        let mut contents = String::new();
-        file.read_to_string(&mut contents).expect("Failed to read test file content");
+        fs::write("testfiles/t1.txt", "Lorem\nIpsum\n\ndolor sit amet").expect("Writing to test file failed");
+        let contents = fs::read_to_string("testfiles/t1.txt").expect("Failed to read test file");
+        assert_eq!(contents, read_file("testfiles/t1.txt".to_string()).unwrap());
+    }
 
-        assert_eq!(contents, read_file("tests/t1.txt".to_string()));
+    #[test]
+    #[should_panic]
+    fn test_file_reader_err(){
+        read_file("Not_A_File".to_string()).unwrap();
     }
 
     #[test]
     fn test_search(){
-        let content = read_file("tests/Test.txt".to_string());
+        let content = read_file("testfiles/Test.txt".to_string()).unwrap();
         let ans = search("locked",&content);
 
         assert_eq!(ans, "\nam I to be locked in this\n".to_string());
