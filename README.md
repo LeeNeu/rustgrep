@@ -20,7 +20,7 @@ Furthermore it should serve for other Rust Beginners as an oppurtunity to learn 
 To contribute to this project: 
 1. Pick/Create an issue
 2. Fork the repository
-3. Resolve the issue and push your code to the dev branch
+3. Resolve the issue and push
 4. Create a Pull Request
 
 Some general Do's:  
