@@ -11,6 +11,7 @@ use regex::Regex;
 
 
 //---Search Function---//
+//TODO make search function return result
 pub fn search(search_string: &str, haystack: &str) -> String{
 
     // Regex looks for the searched string in the given file and returns the line in which it is found
@@ -19,6 +20,11 @@ pub fn search(search_string: &str, haystack: &str) -> String{
 
     //TODO find a better way to output it instead of conversioning back and forth
     mat.as_str().to_string()
+}
+
+//TODO Implement Submodule for Search Parameters struct
+pub mod search_parameters{
+
 }
 
 #[cfg(test)]
