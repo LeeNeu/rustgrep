@@ -1,8 +1,7 @@
 use std::error::Error;
-
 use clap::{arg, command, ArgMatches, Command};
 use crate::utils::test_command::print_test_file;
-use crate::utils::file_processor::{search, read_file};
+use crate::utils::file_processor::{search, read_file, search_parameters::SearchParameters};
 
 //Read in all arguments
 pub fn read_args() -> ArgMatches {
@@ -31,13 +30,20 @@ pub fn exec_args(args: ArgMatches)-> Result<String,Box<dyn Error>>{
     // Execute file search
     // TODO instead of unwrap the Error should be mapped when returned
     let haystack= read_file(filepath.clone())?;
-    Ok(search(search_string, &haystack))
+
+    //Construct search paramters to pass to search function
+    let search_params = SearchParameters {
+        search_string: search_string.clone(),
+        haystack,
+    };
+
+    Ok(search(search_params))
 }
 
 //TODO Implement Tests for interface
 #[cfg(test)]
 mod test {
-    use super::*;
+    // use super::*;
 
     #[test]
     fn test_exec_args(){
