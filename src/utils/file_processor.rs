@@ -9,17 +9,18 @@ pub fn read_file(filepath: String) -> Result<String, Box<dyn Error>> {
     Ok(content)
 }
 
-
 //---Search Function---//
-//TODO make search function return result
-pub fn search(params: SearchParameters) -> String{
+//TODO make search function return Option
+pub fn search(params: SearchParameters) -> Option<String>{
 
-    // Regex looks for the searched string in the given file and returns the line in which it is found
-    let regex = Regex::new(format!("{}{}{}",r"\n.*", params.search_string,r".*[\n\r]").as_str()).unwrap();
-    let mat = regex.find(&params.haystack).unwrap();
+    // Regex fin for the searched string in the given file and returns the line in which it is found
+    let regex = Regex::new(format!("{}{}{}",r"(?m)^.*", params.search_string,r".*$").as_str()).unwrap();
+
+    //Option
+    let mat = regex.find(&params.haystack)?;
 
     //TODO find a better way to output it instead of conversioning back and forth
-    mat.as_str().to_string()
+    Some(mat.as_str().to_string())
 }
 
 //TODO Implement Submodule for Search Parameters struct
@@ -56,8 +57,21 @@ mod test {
             haystack: content,
         };
 
-        let ans = search(search_params);
+        let ans = search(search_params).unwrap();
 
-        assert_eq!(ans, "\nam I to be locked in this\n".to_string());
+        assert_eq!(ans, "am I to be locked in this".to_string());
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_search_none() {
+        let content = read_file("testfiles/Test.txt".to_string()).unwrap();
+
+        let search_params = SearchParameters{
+            search_string: "non existend".to_string(),
+            haystack: content,
+        };
+
+        search(search_params).unwrap();
     }
 }

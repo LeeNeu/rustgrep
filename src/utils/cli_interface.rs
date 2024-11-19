@@ -28,7 +28,6 @@ pub fn exec_args(args: ArgMatches)-> Result<String,Box<dyn Error>>{
     let filepath = args.get_one::<String>("filepath").unwrap();
 
     // Execute file search
-    // TODO instead of unwrap the Error should be mapped when returned
     let haystack= read_file(filepath.clone())?;
 
     //Construct search paramters to pass to search function
@@ -37,16 +36,12 @@ pub fn exec_args(args: ArgMatches)-> Result<String,Box<dyn Error>>{
         haystack,
     };
 
-    Ok(search(search_params))
+    // TODO create custom error in case not Regex could be matched
+    Ok(search(search_params).unwrap())
 }
 
 //TODO Implement Tests for interface
 #[cfg(test)]
 mod test {
     // use super::*;
-
-    #[test]
-    fn test_exec_args(){
-
-    }
 }
