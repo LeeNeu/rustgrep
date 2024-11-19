@@ -16,7 +16,7 @@ pub fn search(params: SearchParameters) -> Option<String>{
     // Regex fin for the searched string in the given file and returns the line in which it is found
     let regex = Regex::new(format!("{}{}{}",r"(?m)^.*", params.search_string,r".*$").as_str()).unwrap();
 
-    //Option
+    // Find Regex in Haystack
     let mat = regex.find(&params.haystack)?;
 
     //TODO find a better way to output it instead of conversioning back and forth
