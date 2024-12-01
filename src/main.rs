@@ -1,7 +1,6 @@
 mod utils;
 
-use crate::utils::cli_interface::{read_args, exec_args};
-
+use crate::utils::cli_interface::{exec_args, read_args};
 
 fn main() {
     let args = read_args();
@@ -11,6 +10,3 @@ fn main() {
 
     println!("{}", res);
 }
-
-
-
