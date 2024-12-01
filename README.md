@@ -3,7 +3,7 @@
 Rustgrep is the linux command-line tool "grep" rewritten in Rust with basic features.  
 If grep is unfamiliar to you check out: [How To Geek: grep](https://www.howtogeek.com/496056/how-to-use-the-grep-command-on-linux/).
 
-## Purpose
+## About
 
 I created this project in order to learn Rust. Therefore it is by far not mature or comparable to grep in this stage.  
 With this project I am trying to learn the concepts of Rust and also enhance my knowledge about software engineering in general.  
@@ -34,11 +34,19 @@ Thank you for your contribution and I hope you have fun with this project! :)
 
 ## Install
 
-To run this project: 
-1. Pull Project from Github
-2. In the Terminal run: 'cargo run -- help'
+> Rustup & Cargo must be installed before installing rustgrep
 
-This will output the help section of the Rustgrep CLI. 
+1. Download Code from GitHub
+2. Open Project in Code Editor or navigate to the rustgrep folder in your terminal
+3. Type the following command in your terminal: `cargo build --release`
+4. Navigate to `rustgrep/target/rustgrep` this is the rustgrep executable
+5. Add the path to the executable to your environment variables and give it the alias "rustgrep"
+
+To check if installation was successful open your terminal and type: `rustgrep help` 
+The output should look similar to this: 
+
+![Example Image for Help Command](https://github.com/LeeNeu/rustgrep/blob/master/doc/img/HelpCommandExample.png "Help Command")
+
 
 ## Crates used
 - [Clap](https://docs.rs/clap/latest/clap/)
