@@ -10,9 +10,8 @@ pub fn read_file(filepath: String) -> Result<String, Box<dyn Error>> {
 }
 
 //---Search Function---//
-//TODO make search function return Option
 pub fn search(params: SearchParameters) -> Option<String> {
-    // Regex fin for the searched string in the given file and returns the line in which it is found
+    // Regex find for the searched string in the given file and returns the line in which it is found
     let regex =
         Regex::new(format!("{}{}{}", r"(?m)^.*", params.search_string, r".*$").as_str()).unwrap();
 
