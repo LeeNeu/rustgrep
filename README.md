@@ -45,7 +45,7 @@ Thank you for your contribution and I hope you have fun with this project! :)
 To check if installation was successful open your terminal and type: `rustgrep -h` 
 The output should look similar to this: 
 
-![Example Image for Help Command](doc/img/ExampleHelp.png)
+![Example Image for Help Command](img/ExampleHelp.png)
 
 
 ## Crates used
