@@ -1,5 +1,6 @@
 use crate::utils::file_processor::read_file;
 
+//TODO implement that this code only gets compiled when it is a test build
 const TESTPATH: &str = "testfiles/Test.txt";
 
 //Open file "testfiles/Test.txt" and print out text

@@ -1,31 +1,58 @@
 use crate::utils::file_processor::{read_file, search, search_parameters::SearchParameters};
-use crate::utils::test_command::print_test_file;
-use clap::{arg, command, ArgMatches, Command};
+//use clap::{arg, ArgMatches, Command};
+use clap::Parser;
 use std::error::Error;
 
-//Read in all arguments
-// TODO Implement Piping support
-pub fn read_args() -> ArgMatches {
-    //Read the command line arguments
-    command!()
-        .arg(arg!([string] "String to be searched for"))
-        .arg(arg!([filepath] "File to be searched"))
-        .subcommand(Command::new("test").about("Prints out a test file"))
-        .get_matches()
+#[cfg(feature = "test_command")]
+use  {crate::utils::test_command::print_test_file, clap::Subcommand};
+
+
+//Derive Argument Parser
+#[derive(Parser)]
+#[command(version, about, long_about = None)]
+#[command(propagate_version = true)]
+struct Cli {
+    //String to be searched for
+    string: Option<String>,
+
+    //File to be searched
+    filepath: Option<String>,
+
+    #[cfg(feature = "test_command")]
+    #[command(subcommand)]
+    command: Option<Commands>,
+    
 }
+
+#[cfg(feature = "test_command")]
+#[derive(Subcommand)]
+enum Commands {
+    //Prints out test file
+    Test,
+}
+
+// TODO implement piping support
 
 //---Execute Args---//
 // Handles all args provided from the command line and executes the matching functions
-pub fn exec_args(args: ArgMatches) -> Result<String, Box<dyn Error>> {
-    // TODO Create an Error type in case test is called
-    if args.subcommand_matches("test").is_some() {
-        print_test_file();
-        return Ok("".to_string());
+pub fn exec_args() -> Result<String, Box<dyn Error>> {
+
+    //Parse Arguments
+    let cli = Cli::parse();
+
+    #[cfg(feature = "test_command")]
+    match &cli.command {
+        Some(Commands::Test) => {
+            print_test_file();
+            return Ok("".to_string());
+        }
+        None => {}
     }
 
     // Get arguments
-    let search_string = args.get_one::<String>("string").unwrap();
-    let filepath = args.get_one::<String>("filepath").unwrap();
+    // TODO let them return the None value as a result type
+    let search_string = cli.string.unwrap();
+    let filepath = cli.filepath.unwrap();
 
     // Execute file search
     let haystack = read_file(filepath.clone())?;
@@ -36,7 +63,7 @@ pub fn exec_args(args: ArgMatches) -> Result<String, Box<dyn Error>> {
         haystack,
     };
 
-    // TODO create custom error in case not Regex could be matched
+    // TODO create custom error in case no Regex could be matched
     Ok(search(search_params).unwrap())
 }
 
