@@ -42,10 +42,10 @@ Thank you for your contribution and I hope you have fun with this project! :)
 4. Navigate to `rustgrep/target/rustgrep` this is the rustgrep executable
 5. Add the path to the executable to your environment variables and give it the alias "rustgrep"
 
-To check if installation was successful open your terminal and type: `rustgrep help` 
+To check if installation was successful open your terminal and type: `rustgrep -h` 
 The output should look similar to this: 
 
-![Example Image for Help Command](https://github.com/LeeNeu/rustgrep/blob/master/doc/img/HelpCommandExample.png "Help Command")
+![Example Image for Help Command](doc/img/ExampleHelp.png)
 
 
 ## Crates used
