@@ -10,12 +10,12 @@ use  {crate::utils::test_command::print_test_file, clap::Subcommand};
 //Derive Argument Parser
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
-#[command(propagate_version = true)]
 struct Cli {
-    //String to be searched for
+
+    ///String to be searched for
     string: Option<String>,
 
-    //File to be searched
+    ///File to be searched
     filepath: Option<String>,
 
     #[cfg(feature = "test_command")]
@@ -27,7 +27,7 @@ struct Cli {
 #[cfg(feature = "test_command")]
 #[derive(Subcommand)]
 enum Commands {
-    //Prints out test file
+    ///Prints out test file
     Test,
 }
 
