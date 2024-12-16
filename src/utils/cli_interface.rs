@@ -1,17 +1,14 @@
 use crate::utils::file_processor::{read_file, search, search_parameters::SearchParameters};
-//use clap::{arg, ArgMatches, Command};
 use clap::Parser;
 use std::error::Error;
 
 #[cfg(feature = "test_command")]
-use  {crate::utils::test_command::print_test_file, clap::Subcommand};
-
+use {crate::utils::test_command::print_test_file, clap::Subcommand};
 
 //Derive Argument Parser
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
 struct Cli {
-
     ///String to be searched for
     string: Option<String>,
 
@@ -21,7 +18,6 @@ struct Cli {
     #[cfg(feature = "test_command")]
     #[command(subcommand)]
     command: Option<Commands>,
-    
 }
 
 #[cfg(feature = "test_command")]
@@ -36,7 +32,6 @@ enum Commands {
 //---Execute Args---//
 // Handles all args provided from the command line and executes the matching functions
 pub fn exec_args() -> Result<String, Box<dyn Error>> {
-
     //Parse Arguments
     let cli = Cli::parse();
 

@@ -17,6 +17,3 @@ mod test {
         File::open(TESTPATH).unwrap();
     }
 }
-
-
-
