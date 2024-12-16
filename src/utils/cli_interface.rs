@@ -66,6 +66,11 @@ pub fn exec_args() -> Result<String, Box<dyn Error>> {
     search(search_params)
 }
 
+//TODO Extracts piped argument from stdin
+fn get_piped() -> Result<String, SearchParameterError> {
+    todo!()
+}
+
 //TODO Implement Tests for interface
 #[cfg(test)]
 mod test {
