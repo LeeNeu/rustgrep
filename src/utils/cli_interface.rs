@@ -1,7 +1,7 @@
+use crate::prelude::error::SearchParameterError;
 use crate::utils::file_processor::{read_file, search, search_parameters::SearchParameters};
 use clap::Parser;
 use std::error::Error;
-use crate::prelude::error::SearchParameterError;
 
 #[cfg(feature = "test_command")]
 use {crate::utils::test_command::print_test_file, clap::Subcommand};
@@ -47,14 +47,18 @@ pub fn exec_args() -> Result<String, Box<dyn Error>> {
 
     // Get arguments
     // TODO let them return the None value as a result type
-    let filepath = cli.filepath.ok_or(SearchParameterError::Empty("FILEPATH".to_string()))?;
+    let filepath = cli
+        .filepath
+        .ok_or(SearchParameterError::Empty("FILEPATH".to_string()))?;
 
     // Execute file search
     let haystack = read_file(filepath.clone())?;
 
     //Construct search paramters to pass to search function
     let search_params = SearchParameters {
-        search_string: cli.string.ok_or(SearchParameterError::Empty("STRING".to_string()))?,
+        search_string: cli
+            .string
+            .ok_or(SearchParameterError::Empty("STRING".to_string()))?,
         haystack,
     };
 
