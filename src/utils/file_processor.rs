@@ -1,3 +1,4 @@
+use crate::prelude::error::SearchError;
 use regex::Regex;
 use search_parameters::SearchParameters;
 use std::{error::Error, fs};
@@ -10,16 +11,17 @@ pub fn read_file(filepath: String) -> Result<String, Box<dyn Error>> {
 }
 
 //---Search Function---//
-pub fn search(params: SearchParameters) -> Option<String> {
+pub fn search(params: SearchParameters) -> Result<String, Box<dyn Error>> {
     // Regex find matches for the searched string in the given file and returns the line in which it is found
-    let regex =
-        Regex::new(format!("{}{}{}", r"(?m)^.*", params.search_string, r".*$").as_str()).unwrap();
+    let regex = Regex::new(format!("{}{}{}", r"(?m)^.*", params.search_string, r".*$").as_str())?;
 
     // Find Regex in Haystack
-    let mat = regex.find(&params.haystack)?;
+    let mat = regex
+        .find(&params.haystack)
+        .ok_or(Box::new(SearchError::NotFound(params.search_string)))?;
 
     //TODO find a better way to output it instead of conversioning back and forth
-    Some(mat.as_str().to_string())
+    Ok(mat.as_str().to_string())
 }
 
 //TODO Implement Submodule for Search Parameters struct

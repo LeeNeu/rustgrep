@@ -63,7 +63,7 @@ pub fn exec_args() -> Result<String, Box<dyn Error>> {
     };
 
     // TODO create custom error in case no Regex could be matched
-    Ok(search(search_params).unwrap())
+    search(search_params)
 }
 
 //TODO Implement Tests for interface
