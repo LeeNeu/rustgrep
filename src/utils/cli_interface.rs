@@ -1,7 +1,7 @@
 use crate::prelude::error::SearchParameterError;
 use crate::utils::file_processor::{read_file, search, search_parameters::SearchParameters};
 use clap::Parser;
-use std::error::Error;
+use std::{error::Error, io, io::IsTerminal};
 
 #[cfg(feature = "test_command")]
 use {crate::utils::test_command::print_test_file, clap::Subcommand};
@@ -46,13 +46,17 @@ pub fn exec_args() -> Result<String, Box<dyn Error>> {
     }
 
     // Get arguments
-    // TODO let them return the None value as a result type
-    let filepath = cli
-        .filepath
-        .ok_or(SearchParameterError::Empty("FILEPATH".to_string()))?;
 
-    // Execute file search
-    let haystack = read_file(filepath.clone())?;
+    //Get haystack
+    //If Filepath can be retrieved from arguments read into haystack with read_file,
+    //If not check pipe input and if available read it into haystack
+    let haystack = match cli.filepath {
+        Some(path) => read_file(path.clone())?,
+        None => {
+            //Check piped input error
+            get_piped()?
+        }
+    };
 
     //Construct search paramters to pass to search function
     let search_params = SearchParameters {
@@ -62,13 +66,19 @@ pub fn exec_args() -> Result<String, Box<dyn Error>> {
         haystack,
     };
 
-    // TODO create custom error in case no Regex could be matched
+    // Search for string in haystack
     search(search_params)
 }
 
-//TODO Extracts piped argument from stdin
+// Extracts piped argument from stdin
 fn get_piped() -> Result<String, SearchParameterError> {
-    todo!()
+    // In case there is no piped input return error
+    if io::stdin().is_terminal() {
+        return Err(SearchParameterError::Empty("FILEPATH".to_string()));
+    }
+    //TODO cap max byte size to be read
+    let input = io::read_to_string(io::stdin()).map_err(|_| SearchParameterError::FalsePipeInput)?;
+    Ok(input)
 }
 
 //TODO Implement Tests for interface
