@@ -39,8 +39,8 @@ Thank you for your contribution and I hope you have fun with this project! :)
 1. Download Code from GitHub
 2. Open Project in Code Editor or navigate to the rustgrep folder in your terminal
 3. Type the following command in your terminal: `cargo build --release`
-4. Navigate to `rustgrep/target/rustgrep` this is the rustgrep executable
-5. Add the path to the executable to your environment variables and give it the alias "rustgrep"
+4. Navigate to `rustgrep/target/rustgrep` and copy full path. This is the rustgrep executable
+5. Add the path to the executable to your environment variables and assign alias "rustgrep"
 
 To check if installation was successful open your terminal and type: `rustgrep -h` 
 The output should look similar to this: 
@@ -51,3 +51,4 @@ The output should look similar to this:
 ## Crates used
 - [Clap](https://docs.rs/clap/latest/clap/)
 - [Regex](https://docs.rs/regex/latest/regex/)
+- [thiserror](https://docs.rs/thiserror/latest/thiserror/)
