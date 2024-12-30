@@ -14,6 +14,7 @@ Furthermore it should serve for other Rust Beginners as an oppurtunity to learn 
 - Let rustgrep be a fully functional substitution to the original grep
 - Create a standalone cli tool from this project.
 - To let collaborators have fun while learning rust on this project
+- Implement optional flags for rustgrep
 
 ## Contribute 👨🏼‍💻👩🏼‍💻
 
