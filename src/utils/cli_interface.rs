@@ -45,9 +45,6 @@ pub fn exec_args() -> Result<String, Box<dyn Error>> {
         None => {}
     }
 
-    // Get arguments
-
-    //Get haystack
     //If Filepath can be retrieved from arguments read into haystack with read_file,
     //If not check pipe input and if available read it into haystack
     let haystack = match cli.filepath {
@@ -77,7 +74,8 @@ fn get_piped() -> Result<String, SearchParameterError> {
         return Err(SearchParameterError::Empty("FILEPATH".to_string()));
     }
     //TODO cap max byte size to be read
-    let input = io::read_to_string(io::stdin()).map_err(|_| SearchParameterError::FalsePipeInput)?;
+    let input =
+        io::read_to_string(io::stdin()).map_err(|_| SearchParameterError::FalsePipeInput)?;
     Ok(input)
 }
 
